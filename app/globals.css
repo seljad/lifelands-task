@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --background: #f4f4fb;
+  --surface: #ffffff;
+  --surface-muted: #ebebf6;
+  --border: #d4d4e6;
+  --foreground: #15152b;
+  --muted: #55556f;
+  --accent: #5632e8;
+  --accent-foreground: #ffffff;
+  --danger: #b3261e;
+  --shimmer: #e3e3f1;
+  --snow: #9ec5ff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0c0c1a;
+    --surface: #16162b;
+    --surface-muted: #202040;
+    --border: #34345a;
+    --foreground: #ececf8;
+    --muted: #a8a8c8;
+    --accent: #a594ff;
+    --accent-foreground: #0c0c1a;
+    --danger: #ff8a80;
+    --shimmer: #25254a;
+    --snow: #ffffff;
   }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-shimmer: var(--shimmer);
+  --font-sans: var(--font-vazirmatn), system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  line-height: 1.8;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@keyframes shimmer {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+      100deg,
+      var(--shimmer) 40%,
+      var(--surface-muted) 50%,
+      var(--shimmer) 60%
+    )
+    100% 0 / 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes snowfall {
+  from {
+    transform: translate3d(0, -10vh, 0);
+  }
+  to {
+    transform: translate3d(24px, 110vh, 0);
+  }
+}
+
+.snowflake {
+  position: absolute;
+  top: 0;
+  border-radius: 9999px;
+  background: var(--snow);
+  opacity: 0.8;
+  animation: snowfall linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+
+  .snow {
+    display: none;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }
